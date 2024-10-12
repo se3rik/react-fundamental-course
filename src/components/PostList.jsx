@@ -6,8 +6,7 @@ export default function PostList({posts, listTitle}) {
     <div>
       <h1 style={{ textAlign: "center" }}>{listTitle}</h1>
       {posts.length !== 0 &&
-        posts.map((post) => <PostItem key={post.id} post={post} />)}
-      ;
+        posts.map((post, index) => <PostItem key={post.id} number={index ++} post={post} />)}
     </div>
   );
 }
