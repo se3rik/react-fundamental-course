@@ -5,6 +5,7 @@ import PostForm from "./components/PostForm";
 
 import "./styles/App.css";
 import MySelect from "./components/UI/select/MySelect";
+import MyInput from "./components/UI/input/MyInput";
 
 export default function App() {
   const [posts, setPosts] = useState([
@@ -13,7 +14,7 @@ export default function App() {
     { id: 3, title: "Ruby", body: "Ruby - язык программирования" },
   ]);
 
-  const [selectedSort, setSelectedSort] = useState('');
+  const [selectedSort, setSelectedSort] = useState("");
 
   function createPost(newPost) {
     setPosts([...posts, newPost]);
@@ -25,7 +26,9 @@ export default function App() {
 
   function sortPosts(sortValue) {
     setSelectedSort(sortValue);
-    setPosts([...posts].sort((a, b) => a[sortValue].localeCompare(b[sortValue])))
+    setPosts(
+      [...posts].sort((a, b) => a[sortValue].localeCompare(b[sortValue]))
+    );
   }
 
   return (
