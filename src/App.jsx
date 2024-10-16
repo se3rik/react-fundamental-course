@@ -3,8 +3,10 @@ import React, { useMemo, useState } from "react";
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 import PostFilter from "./components/PostFilter";
+import MyModal from "./components/UI/modal/MyModal.tsx";
 
 import "./styles/App.css";
+import MyButton from "./components/UI/button/MyButton.jsx";
 
 export default function App() {
   const [posts, setPosts] = useState([
@@ -13,6 +15,7 @@ export default function App() {
     { id: 3, title: "Ruby", body: "Ruby - язык программирования" },
   ]);
   const [filter, setFilter] = useState({ sort: "", query: "" });
+  const [modal, setModal] = useState(false);
 
   const sortedPosts = useMemo(() => {
     if (filter.sort) {
@@ -29,6 +32,7 @@ export default function App() {
 
   function createPost(newPost) {
     setPosts([...posts, newPost]);
+    setModal(false);
   }
 
   function removePost(post) {
@@ -37,8 +41,12 @@ export default function App() {
 
   return (
     <div className="App">
-      <PostForm create={createPost} />
-      <hr style={{ margin: "15px 0px" }} />
+      <MyButton style={{ marginTop: "30px" }} onClick={() => setModal(true)}>
+        Создать пост
+      </MyButton>
+      <MyModal visible={modal} setVisible={setModal}>
+        <PostForm create={createPost} />
+      </MyModal>
       <PostFilter filter={filter} setFilter={setFilter} />
       <PostList
         remove={removePost}
