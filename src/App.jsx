@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { usePosts } from "./hooks/usePosts.js";
 
 import PostList from "./components/PostList";
@@ -9,6 +8,7 @@ import MyModal from "./components/UI/modal/MyModal.tsx";
 import MyButton from "./components/UI/button/MyButton.jsx";
 
 import "./styles/App.css";
+import PostService from "./api/PostService.js";
 
 export default function App() {
   const [posts, setPosts] = useState([]);
@@ -26,10 +26,8 @@ export default function App() {
   }
 
   async function fetchPosts() {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts"
-    );
-    setPosts(response.data);
+    const posts = await PostService.getAll();
+    setPosts(posts);
   }
 
   useEffect(() => {
