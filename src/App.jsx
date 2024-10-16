@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { usePosts } from "./hooks/usePosts.js";
 
 import PostList from "./components/PostList";
@@ -10,11 +11,7 @@ import MyButton from "./components/UI/button/MyButton.jsx";
 import "./styles/App.css";
 
 export default function App() {
-  const [posts, setPosts] = useState([
-    { id: 1, title: "JavaScript", body: "JavaScript - язык программирования" },
-    { id: 2, title: "Python", body: "Python - язык программирования" },
-    { id: 3, title: "Ruby", body: "Ruby - язык программирования" },
-  ]);
+  const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({ sort: "", query: "" });
   const [modal, setModal] = useState(false);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
@@ -27,6 +24,17 @@ export default function App() {
   function removePost(post) {
     setPosts(posts.filter((p) => p.id !== post.id));
   }
+
+  async function fetchPosts() {
+    const response = await axios.get(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
+    setPosts(response.data);
+  }
+
+  useEffect(() => {
+    fetchPosts();
+  }, []); 
 
   return (
     <div className="App">
